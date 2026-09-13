@@ -132,12 +132,12 @@ function StealManager.Start(_, robber: Player, targetUserId: number, podiumIndex
 end
 
 function StealManager.Stop(_, robber: Player)
+	-- Отменяет только незавершённый захват. Уже поднятую добычу отпускание кнопки
+	-- НЕ роняет (§5): её роняет лишь оглушение защитой или выход из игры, а доносится
+	-- она авто-сдачей на своём подиуме.
 	if captures[robber] then
 		captures[robber] = nil
 		setProgress(robber, false, 0)
-	end
-	if carrying[robber] then
-		StealManager:Drop(robber)
 	end
 end
 

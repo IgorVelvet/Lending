@@ -201,6 +201,7 @@ Config.RateLimits = {
 Config.DataStore = {
 	Name = "PlayerProfiles_v1",
 	AutosaveInterval = 120, -- автосейв каждые N секунд
+	DirtyFlushInterval = 7, -- флаш «грязных» профилей (дебаунс записей DataStore на ключ)
 	SessionLockStale = 60, -- лок считается «протухшим» через N секунд без обновления
 	LockRefreshInterval = 30, -- обновление heartbeat лока
 	MaxLoadRetries = 5,

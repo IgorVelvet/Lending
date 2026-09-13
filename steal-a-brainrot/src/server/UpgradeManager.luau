@@ -72,7 +72,7 @@ function UpgradeManager.BuyUpgrade(_, player: Player, kind: string): (boolean, s
 		UpgradeManager:ApplyWalkSpeed(player)
 	end
 	ctx.Data:Push(player)
-	ctx.Data:Save(player)
+	ctx.Data:MarkDirty(player)
 	return true
 end
 
@@ -97,7 +97,7 @@ function UpgradeManager.BuySlot(_, player: Player): (boolean, string?)
 	profile.Slots += 1
 	ctx.Plots:Render(player)
 	ctx.Data:Push(player)
-	ctx.Data:Save(player)
+	ctx.Data:MarkDirty(player)
 	return true
 end
 
@@ -120,7 +120,7 @@ function UpgradeManager.BuyDefense(_, player: Player): (boolean, string?)
 		ctx.Defense:Build(player)
 	end
 	ctx.Data:Push(player)
-	ctx.Data:Save(player)
+	ctx.Data:MarkDirty(player)
 	return true
 end
 

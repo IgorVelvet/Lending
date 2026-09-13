@@ -13,6 +13,7 @@ local ReplicatedStorage = game:GetService("ReplicatedStorage")
 
 local Modules = ReplicatedStorage:WaitForChild("Modules")
 local Config = require(Modules:WaitForChild("Config"))
+local RemoteNames = require(Modules:WaitForChild("RemoteNames"))
 
 local EconomyManager = {}
 local ctx: any
@@ -67,7 +68,7 @@ function EconomyManager.Init(_, context)
 	ctx = context
 
 	-- Сбор по remote (тап через ClickDetector идёт через PlotManager → сюда же).
-	ctx.Remotes:OnFunction(require(Modules.RemoteNames).Functions.CollectCash, function(player)
+	ctx.Remotes:OnFunction(RemoteNames.Functions.CollectCash, function(player)
 		local collected = EconomyManager:Collect(player)
 		return true, collected
 	end)
@@ -77,8 +78,8 @@ function EconomyManager.Init(_, context)
 		while true do
 			local dt = task.wait(Config.IncomeTickInterval)
 			for _, player in Players:GetPlayers() do
-				if ctx.Data:IsLoaded(player) then
-					local profile = ctx.Data:Get(player)
+				local profile = ctx.Data:Get(player)
+				if profile then
 					local perSec = EconomyManager:IncomePerSecond(player)
 					if perSec > 0 then
 						local gained = perSec * dt

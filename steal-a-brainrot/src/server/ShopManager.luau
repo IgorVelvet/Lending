@@ -64,7 +64,7 @@ function ShopManager.Buy(_, player: Player, id: string): (boolean, string?)
 
 	ctx.Plots:Render(player)
 	ctx.Data:Push(player)
-	ctx.Data:Save(player)
+	ctx.Data:MarkDirty(player)
 
 	if not podium then
 		ctx.Remotes:FireClient(RemoteNames.Events.Notification, player, {
@@ -99,7 +99,7 @@ function ShopManager.Place(_, player: Player, uid: string, podiumIndex: number):
 	entry.podium = podiumIndex
 	ctx.Plots:Render(player)
 	ctx.Data:Push(player)
-	ctx.Data:Save(player)
+	ctx.Data:MarkDirty(player)
 	return true
 end
 
@@ -116,7 +116,7 @@ function ShopManager.Remove(_, player: Player, podiumIndex: number): (boolean, s
 			entry.podium = nil
 			ctx.Plots:Render(player)
 			ctx.Data:Push(player)
-			ctx.Data:Save(player)
+			ctx.Data:MarkDirty(player)
 			return true
 		end
 	end

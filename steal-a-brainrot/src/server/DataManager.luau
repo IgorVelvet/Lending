@@ -48,6 +48,8 @@ local JOB_ID = game.JobId ~= "" and game.JobId or ("studio-" .. tostring(os.time
 local profiles: { [Player]: Profile } = {}
 -- Игроки, для которых загрузка ещё идёт / провалилась.
 local loading: { [Player]: boolean } = {}
+-- Профили с несохранёнными изменениями (дебаунс записей в DataStore).
+local dirty: { [Player]: boolean } = {}
 
 local function defaultProfile(): Profile
 	return {
@@ -166,7 +168,9 @@ local function commit(player: Player, release: boolean): boolean
 			return old
 		end)
 	end)
-	if not ok then
+	if ok then
+		dirty[player] = nil -- изменения записаны
+	else
 		warn(("[DataManager] save failed for %s: %s"):format(player.Name, tostring(err)))
 	end
 	return ok
@@ -196,6 +200,21 @@ function DataManager.Init(_, context)
 			task.wait(Config.DataStore.AutosaveInterval)
 			for player in profiles do
 				commit(player, false)
+			end
+		end
+	end)
+
+	-- Флаш «грязных» профилей: покупки/апгрейды помечают профиль грязным, а пишутся
+	-- дебаунсом (не чаще раза в DirtyFlushInterval на ключ) — против троттлинга DataStore.
+	task.spawn(function()
+		while true do
+			task.wait(Config.DataStore.DirtyFlushInterval)
+			for player in dirty do
+				if profiles[player] then
+					commit(player, false) -- очистит флаг при успехе
+				else
+					dirty[player] = nil
+				end
 			end
 		end
 	end)
@@ -267,6 +286,7 @@ function DataManager.Release(_, player: Player)
 		profiles[player] = nil
 	end
 	loading[player] = nil
+	dirty[player] = nil
 	if ctx.RateLimiter then
 		ctx.RateLimiter:Clear(player)
 	end
@@ -280,9 +300,17 @@ function DataManager.IsLoaded(_, player: Player): boolean
 	return profiles[player] ~= nil
 end
 
--- Немедленный сейв (например, после кражи/потери брейнрота — §8).
+-- Немедленный сейв (для критичных событий — кража/потеря брейнрота — §8).
 function DataManager.Save(_, player: Player)
 	commit(player, false)
+end
+
+-- Пометить профиль изменённым: запись отложится до ближайшего флаша (дебаунс).
+-- Использовать для частых некритичных действий (покупки, апгрейды, расстановка).
+function DataManager.MarkDirty(_, player: Player)
+	if profiles[player] then
+		dirty[player] = true
+	end
 end
 
 -- Отправляет клиенту снимок ЕГО профиля (не чужие данные — §10).

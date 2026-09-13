@@ -18,6 +18,7 @@ local ReplicatedStorage = game:GetService("ReplicatedStorage")
 
 local Modules = ReplicatedStorage:WaitForChild("Modules")
 local Config = require(Modules:WaitForChild("Config"))
+local RemoteNames = require(Modules:WaitForChild("RemoteNames"))
 
 local PlotManager = {}
 
@@ -285,7 +286,7 @@ function PlotManager.Assign(_, player: Player): Plot?
 				PlotManager:TeleportToBase(player)
 			end)
 			-- Сообщить клиенту индекс плота.
-			ctx.Remotes:FireClient(require(Modules.RemoteNames).Events.PlotAssigned, player, plot.index)
+			ctx.Remotes:FireClient(RemoteNames.Events.PlotAssigned, player, plot.index)
 			return plot
 		end
 	end
@@ -397,7 +398,7 @@ function PlotManager.IsOnRobCooldown(_, plot: Plot): boolean
 	return os.clock() < plot.robCooldownUntil
 end
 
-function PlotManager.All(): { Plot }
+function PlotManager.All(_): { Plot }
 	return plots
 end
 
