@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>VelvetMedia — персональное предложение: сайт + медиаплан под запуск в ноябре</title>
+  <meta name="description" content="Персональное предложение VelvetMedia: пакет по сайту 150 000 ₽ с рассрочкой 3×50 000 ₽ и медиаплан-шаблон для старта в ноябре с ориентиром ~100 лидов." />
+  <meta name="robots" content="noindex, nofollow" />
+
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%237c3aed'/%3E%3Ctext x='16' y='22' font-family='Arial' font-size='18' font-weight='bold' fill='white' text-anchor='middle'%3EV%3C/text%3E%3C/svg%3E" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+
+  <style>
+    /* ===== Proposal-specific (единые отступы заголовков по всей странице) ===== */
+    .prop h2 { font-size: clamp(24px, 3.2vw, 34px); font-weight: 800; letter-spacing: -.02em; margin: 0 0 28px; }
+    .prop h3 { font-size: 20px; font-weight: 700; margin: 0 0 16px; }
+    .prop h4 { font-size: 16px; font-weight: 700; margin: 0 0 12px; }
+    .prop p  { margin: 0 0 14px; }
+    .prop p:last-child { margin-bottom: 0; }
+
+    .prop-hero { padding: 118px 0 44px; position: relative; overflow: hidden; }
+    .prop-hero__glow { position: absolute; top: -160px; right: -120px; width: 560px; height: 560px;
+      background: radial-gradient(circle, var(--violet-glow), transparent 65%); filter: blur(40px); z-index: 0; }
+    .prop-hero__in { position: relative; z-index: 1; max-width: 760px; }
+    .prop-hero h1 { font-size: clamp(30px, 4.6vw, 48px); line-height: 1.1; font-weight: 800; letter-spacing: -.02em; margin: 18px 0 18px; }
+    .prop-hero p { font-size: 18px; color: #cfc9e0; max-width: 620px; }
+
+    .anchor-row { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 28px; }
+
+    .block { padding: 56px 0; }
+    .block--alt { background: var(--bg-2); }
+
+    .kicker { display: inline-block; padding: 6px 14px; border-radius: 999px; font-size: 13px; font-weight: 700;
+      color: var(--accent); background: rgba(124, 58, 237, .14); border: 1px solid rgba(124, 58, 237, .3); margin-bottom: 18px; }
+
+    /* Price card */
+    .price-card { background: linear-gradient(180deg, var(--bg-card-2), var(--bg-card)); border: 1px solid var(--line);
+      border-radius: var(--radius); padding: 32px; box-shadow: var(--shadow); }
+    .price-card__top { display: flex; align-items: baseline; gap: 14px; flex-wrap: wrap; margin-bottom: 6px; }
+    .price-card__sum { font-size: clamp(34px, 5vw, 46px); font-weight: 800;
+      background: linear-gradient(120deg, var(--violet-2), #e9d5ff); -webkit-background-clip: text; background-clip: text; color: transparent; }
+    .price-card__pay { font-size: 15px; color: var(--muted); font-weight: 600; }
+    .pill { display: inline-flex; align-items: center; gap: 8px; padding: 8px 14px; border-radius: 10px;
+      background: rgba(124, 58, 237, .16); border: 1px solid rgba(124, 58, 237, .32); color: var(--accent);
+      font-weight: 700; font-size: 14px; margin-top: 12px; }
+
+    .grid-2 { display: grid; grid-template-columns: 1.05fr .95fr; gap: 32px; align-items: start; }
+    .grid-2--rev { grid-template-columns: .95fr 1.05fr; }
+
+    /* Table */
+    .table-wrap { border: 1px solid var(--line); border-radius: var(--radius); overflow-x: auto; background: var(--bg-card); }
+    table.mp { width: 100%; min-width: 500px; border-collapse: collapse; font-size: 15px; }
+    table.mp th, table.mp td { padding: 14px 16px; text-align: left; border-bottom: 1px solid var(--line); }
+    table.mp th { font-size: 12.5px; text-transform: uppercase; letter-spacing: .05em; color: var(--violet-2);
+      font-weight: 700; background: rgba(124, 58, 237, .07); }
+    table.mp td.num, table.mp th.num { text-align: right; white-space: nowrap; }
+    table.mp tr:last-child td { border-bottom: none; }
+    table.mp .row-total td { font-weight: 800; background: rgba(124, 58, 237, .10); border-top: 1px solid rgba(124,58,237,.3); }
+    table.mp .ch { font-weight: 700; color: var(--text); }
+    table.mp .role { color: var(--muted); font-size: 13.5px; }
+
+    .totals { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; margin-top: 24px; }
+    .total-box { background: var(--bg-card); border: 1px solid var(--line); border-radius: 14px; padding: 22px; }
+    .total-box .lbl { font-size: 13px; color: var(--muted); font-weight: 600; margin-bottom: 8px; }
+    .total-box .val { font-size: 26px; font-weight: 800; color: var(--text); line-height: 1.1; }
+    .total-box .sub { font-size: 12.5px; color: var(--violet-2); font-weight: 700; margin-top: 6px; }
+
+    /* Notice / disclaimer */
+    .notice { display: flex; gap: 14px; background: rgba(124, 58, 237, .08); border: 1px solid rgba(124, 58, 237, .28);
+      border-radius: 14px; padding: 18px 20px; color: #d9d4e8; font-size: 14.5px; }
+    .notice__ic { font-size: 20px; line-height: 1.2; flex-shrink: 0; }
+
+    /* Timeline */
+    .timeline { display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px; margin-top: 8px; }
+    .tl { background: var(--bg-card); border: 1px solid var(--line); border-radius: var(--radius); padding: 24px; }
+    .tl__step { font-size: 13px; font-weight: 700; color: var(--violet-2); margin-bottom: 10px; }
+    .tl h4 { margin-bottom: 8px; }
+    .tl p { color: var(--muted); font-size: 14px; }
+
+    .mini-list { list-style: none; display: grid; gap: 12px; margin: 6px 0 0; }
+    .mini-list li { position: relative; padding-left: 30px; color: #d9d4e8; font-weight: 500; }
+    .mini-list li::before { content: ""; position: absolute; left: 0; top: 3px; width: 20px; height: 20px;
+      background: rgba(124, 58, 237, .18) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='13' height='13' viewBox='0 0 24 24' fill='none' stroke='%23a855f7' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='20 6 9 17 4 12'/%3E%3C/svg%3E") center/13px no-repeat;
+      border-radius: 6px; }
+    .mini-list li b { color: #fff; }
+    .mini-list li span { display: block; color: var(--muted); font-weight: 500; font-size: 14px; margin-top: 2px; }
+
+    .foot-note { color: var(--muted); font-size: 13px; margin-top: 16px; }
+
+    @media (max-width: 900px) {
+      .grid-2, .grid-2--rev { grid-template-columns: 1fr; }
+      .totals { grid-template-columns: 1fr; }
+      .timeline { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 640px) {
+      .timeline { grid-template-columns: 1fr; }
+      table.mp th, table.mp td { padding: 11px 12px; font-size: 14px; }
+    }
+  </style>
+</head>
+<body class="prop">
+
+  <!-- ===== Header ===== -->
+  <header class="header" id="header">
+    <div class="container header__inner">
+      <a href="index.html" class="logo">
+        <span class="logo__mark">V</span>
+        <span class="logo__text">Velvet<b>Media</b></span>
+      </a>
+      <nav class="nav">
+        <a href="#site">Сайт</a>
+        <a href="#mediaplan">Медиаплан</a>
+        <a href="#timeline">Старт в ноябре</a>
+        <a href="#contacts">Контакты</a>
+      </nav>
+      <div class="header__cta">
+        <a href="tel:+78552760077" class="header__phone">+7 (8552) 76-00-77</a>
+      </div>
+      <button class="burger" aria-label="Меню" id="burger"><span></span><span></span><span></span></button>
+    </div>
+  </header>
+
+  <!-- ===== Hero ===== -->
+  <section class="prop-hero">
+    <div class="prop-hero__glow"></div>
+    <div class="container prop-hero__in reveal">
+      <span class="kicker">Персональное предложение</span>
+      <h1>Сайт-пакет и медиаплан<br />под ваш запуск <span class="grad">в ноябре</span></h1>
+      <p>
+        Собрали ответ по двум вопросам: пакет по сайту с рассрочкой и отдельный
+        медиаплан под старт — минимальный набор, чтобы стартовать, а не полный квартальный
+        бюджет. Ориентир по заявкам — около 100 лидов в месяц.
+      </p>
+      <div class="anchor-row">
+        <a href="#site" class="btn btn--primary">Пакет по сайту — 150 000 ₽</a>
+        <a href="#mediaplan" class="btn btn--ghost">Медиаплан старта</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== Site package ===== -->
+  <section class="block" id="site">
+    <div class="container">
+      <div class="reveal">
+        <h2>Сайт: пакет «под ключ» за 150 000 ₽</h2>
+        <p style="color:var(--muted); max-width:720px;">
+          Подтверждаем: в 150 000 ₽ входит не только сайт, а весь комплект присутствия
+          в интернете. Оплата — тремя равными платежами по 50 000 ₽ в течение 3 месяцев.
+        </p>
+      </div>
+
+      <div class="grid-2" style="margin-top:32px;">
+        <div class="price-card reveal">
+          <div class="price-card__top">
+            <span class="price-card__sum">150 000 ₽</span>
+            <span class="price-card__pay">за пакет целиком</span>
+          </div>
+          <span class="pill">Рассрочка 3 × 50 000 ₽ / мес — без удорожания</span>
+
+          <div style="margin-top:26px;">
+            <h3>Что входит в пакет</h3>
+            <ul class="mini-list">
+              <li>
+                <b>Индивидуальный сайт</b>
+                <span>Дизайн и структура под ваш бизнес, адаптив, готовность к продвижению — не шаблон.</span>
+              </li>
+              <li>
+                <b>Оформление поисковиков и карт</b>
+                <span>Яндекс.Вебмастер и Google Search Console, региональность, карточки в Яндекс.Бизнес, 2ГИС и Google Бизнес.</span>
+              </li>
+              <li>
+                <b>Размещение в агрегаторах и каталогах</b>
+                <span>Профильные для вашей ниши площадки и справочники — единое описание, контакты, ссылки.</span>
+              </li>
+              <li>
+                <b>Страницы в соцсетях</b>
+                <span>Оформление сообществ (ВКонтакте и др.) в едином стиле с сайтом: обложка, описание, контакты, ссылки.</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="reveal">
+          <div class="offer__card" style="box-shadow:none;">
+            <h3>Почему это выгоднее, чем «просто сайт»</h3>
+            <p style="color:var(--muted);">
+              К моменту открытия у вас есть не только сайт, а всё присутствие: поиск,
+              карты, агрегаторы и соцсети связаны между собой. Это даёт первые заявки
+              ещё до платной рекламы и усиливает её отдачу.
+            </p>
+            <ul class="check-list" style="margin-top:18px;">
+              <li>Единая точка входа: сайт + карты + соцсети + каталоги</li>
+              <li>Первые обращения с карт и агрегаторов — без рекламного бюджета</li>
+              <li>Оплата растянута на 3 месяца — нагрузка на старте ниже</li>
+              <li>Всё готово к запуску рекламы из медиаплана ниже</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== Media plan ===== -->
+  <section class="block block--alt" id="mediaplan">
+    <div class="container">
+      <div class="reveal">
+        <span class="kicker">Медиаплан под старт</span>
+        <h2>Медиаплан: минимум, чтобы стартовать</h2>
+        <p style="color:var(--muted); max-width:760px;">
+          Отдельный шаблон под вас, с учётом открытия в ноябре. Ориентир — около
+          <b style="color:var(--text)">100 лидов в месяц</b>. Разделили на две части, как вы и просили:
+          сначала — только бюджеты на каналы (без работы специалиста), отдельно — стоимость работы
+          специалиста на первые 3 месяца.
+        </p>
+      </div>
+
+      <div class="notice reveal" style="margin:8px 0 30px;">
+        <span class="notice__ic">ⓘ</span>
+        <div>
+          Цифры ниже — <b>оценка по рыночным бенчмаркам</b> для локальных услуг B2C в
+          региональном городе (масштаб Набережных Челнов). Это не факт, а стартовый ориентир:
+          финальный CPL и распределение уточняются после теста первых 2–4 недель. Для Москвы и
+          Санкт-Петербурга ставки выше в 1,5–2,5 раза. Набор каналов (например, Авито и каталоги)
+          финализируем под конкретную нишу.
+        </div>
+      </div>
+
+      <!-- Table A: channel budgets -->
+      <div class="reveal">
+        <h3>1. Рекламные бюджеты на каналы <span style="color:var(--muted); font-weight:600; font-size:15px;">— без работы специалиста</span></h3>
+        <div class="table-wrap">
+          <table class="mp">
+            <thead>
+              <tr>
+                <th>Канал</th>
+                <th>Роль</th>
+                <th class="num">Лиды / мес</th>
+                <th class="num">CPL, ₽*</th>
+                <th class="num">Бюджет, ₽ / мес</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="ch">Яндекс.Директ — Поиск</td>
+                <td class="role">Горячий спрос «ищут сейчас»</td>
+                <td class="num">40</td>
+                <td class="num">600</td>
+                <td class="num">24 000</td>
+              </tr>
+              <tr>
+                <td class="ch">Яндекс.Директ — РСЯ</td>
+                <td class="role">Добор охвата дешевле</td>
+                <td class="num">20</td>
+                <td class="num">350</td>
+                <td class="num">7 000</td>
+              </tr>
+              <tr>
+                <td class="ch">Таргет ВКонтакте</td>
+                <td class="role">Гео-таргет на район / город</td>
+                <td class="num">20</td>
+                <td class="num">450</td>
+                <td class="num">9 000</td>
+              </tr>
+              <tr>
+                <td class="ch">Авито**</td>
+                <td class="role">Спрос «здесь и сейчас»</td>
+                <td class="num">15</td>
+                <td class="num">250</td>
+                <td class="num">3 750</td>
+              </tr>
+              <tr>
+                <td class="ch">Яндекс.Бизнес + 2ГИС (приоритет)</td>
+                <td class="role">Локальный поиск и карты</td>
+                <td class="num">5</td>
+                <td class="num">фикс</td>
+                <td class="num">4 000</td>
+              </tr>
+              <tr class="row-total">
+                <td>Итого рекламный бюджет</td>
+                <td></td>
+                <td class="num">~100</td>
+                <td class="num"></td>
+                <td class="num">≈ 47 750</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="foot-note">
+          * CPL — оценка по рынку, ориентир на старт. ** Авито и профильные каталоги подбираются под нишу —
+          в части ниш канал сильнее, в части не используется. Практический рабочий диапазон бюджета —
+          <b style="color:var(--text)">45 000–55 000 ₽ / мес</b>. Рекламный бюджет клиент оплачивает
+          напрямую на площадки.
+        </p>
+      </div>
+
+      <!-- Table B: specialist -->
+      <div class="reveal" style="margin-top:40px;">
+        <h3>2. Работа специалиста — первые 3 месяца</h3>
+        <div class="table-wrap">
+          <table class="mp">
+            <thead>
+              <tr>
+                <th>Работа</th>
+                <th>Период</th>
+                <th class="num">Стоимость, ₽*</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="ch">Настройка кампаний<span class="role" style="display:block;">Директ (Поиск + РСЯ), таргет ВК, цели и аналитика, оформление карт/агрегаторов</span></td>
+                <td>Разово, месяц 1</td>
+                <td class="num">25 000</td>
+              </tr>
+              <tr>
+                <td class="ch">Ведение и оптимизация<span class="role" style="display:block;">Ставки, минусация, A/B-тесты объявлений, ежемесячный отчёт</span></td>
+                <td>Месяц 1</td>
+                <td class="num">20 000</td>
+              </tr>
+              <tr>
+                <td class="ch">Ведение и оптимизация</td>
+                <td>Месяц 2</td>
+                <td class="num">20 000</td>
+              </tr>
+              <tr>
+                <td class="ch">Ведение и оптимизация</td>
+                <td>Месяц 3</td>
+                <td class="num">20 000</td>
+              </tr>
+              <tr class="row-total">
+                <td>Итого за 3 месяца</td>
+                <td></td>
+                <td class="num">85 000</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="foot-note">* Оценка по рынку для аккаунта такого масштаба. Уточняется по итогам согласования набора каналов.</p>
+      </div>
+
+      <!-- Totals -->
+      <div class="totals reveal">
+        <div class="total-box">
+          <div class="lbl">Рекламный бюджет</div>
+          <div class="val">~48 000 ₽<span style="font-size:15px; color:var(--muted); font-weight:600;"> / мес</span></div>
+          <div class="sub">напрямую на площадки</div>
+        </div>
+        <div class="total-box">
+          <div class="lbl">Работа специалиста</div>
+          <div class="val">85 000 ₽</div>
+          <div class="sub">за первые 3 месяца</div>
+        </div>
+        <div class="total-box">
+          <div class="lbl">Ориентир по заявкам</div>
+          <div class="val">~100 / мес</div>
+          <div class="sub">после выхода на режим</div>
+        </div>
+      </div>
+
+      <div class="notice reveal" style="margin-top:24px;">
+        <span class="notice__ic">✓</span>
+        <div>
+          Это <b>минимальный старт</b>, а не полный квартальный пакет за 1,3 млн. Начинаем с рабочего
+          минимума, за 2–4 недели снимаем реальный CPL по каналам и дальше масштабируем то,
+          что приносит заявки дешевле.
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== Timeline ===== -->
+  <section class="block" id="timeline">
+    <div class="container">
+      <div class="reveal">
+        <h2>Как успеваем к открытию в ноябре</h2>
+        <p style="color:var(--muted); max-width:680px;">Параллелим сайт и подготовку рекламы, чтобы к дню открытия уже шли заявки.</p>
+      </div>
+      <div class="timeline" style="margin-top:32px;">
+        <div class="tl reveal">
+          <div class="tl__step">Недели 1–3</div>
+          <h4>Сайт и присутствие</h4>
+          <p>Собираем сайт, оформляем поисковики, карты, агрегаторы и соцсети.</p>
+        </div>
+        <div class="tl reveal">
+          <div class="tl__step">Недели 3–4</div>
+          <h4>Настройка рекламы</h4>
+          <p>Кампании в Директе и ВК, цели и аналитика, приоритет в картах.</p>
+        </div>
+        <div class="tl reveal">
+          <div class="tl__step">Открытие</div>
+          <h4>Запуск трафика</h4>
+          <p>Включаем рекламу к дате открытия — первые заявки с первого дня.</p>
+        </div>
+        <div class="tl reveal">
+          <div class="tl__step">Мес. 1–3</div>
+          <h4>Оптимизация</h4>
+          <p>Снимаем реальный CPL, перекладываем бюджет в лучшие каналы.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== Contacts ===== -->
+  <section class="block block--alt" id="contacts">
+    <div class="container">
+      <div class="grid-2 reveal">
+        <div>
+          <h2>Готовы обсудить и стартовать</h2>
+          <p style="color:var(--muted); max-width:520px;">
+            Если по составу и цифрам всё ок — зафиксируем условия и составим план запуска
+            под вашу дату открытия. Уточните нишу и город — приведём CPL к вашим реальным цифрам.
+          </p>
+          <ul class="contacts__list" style="margin-top:26px;">
+            <li><span>Телефон</span><a href="tel:+78552760077">+7 (8552) 76-00-77</a></li>
+            <li><span>E-mail</span><a href="mailto:info@velvetmedia.ru">info@velvetmedia.ru</a></li>
+            <li><span>Адрес</span>г. Набережные Челны, пр. Хасана Туфана, 29В, офис 3</li>
+          </ul>
+        </div>
+        <div class="price-card">
+          <h3>Что фиксируем</h3>
+          <ul class="check-list">
+            <li>Сайт-пакет 150 000 ₽ — рассрочка 3 × 50 000 ₽</li>
+            <li>Рекламный бюджет старта ~48 000 ₽ / мес</li>
+            <li>Работа специалиста 85 000 ₽ за 3 месяца</li>
+            <li>Запуск к дате открытия в ноябре</li>
+          </ul>
+          <a href="tel:+78552760077" class="btn btn--primary btn--block" style="margin-top:22px;">Обсудить запуск</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== Footer ===== -->
+  <footer class="footer">
+    <div class="container footer__inner">
+      <div class="footer__col">
+        <a href="index.html" class="logo logo--footer"><span class="logo__mark">V</span><span class="logo__text">Velvet<b>Media</b></span></a>
+        <p>Сайты и интернет-маркетинг для роста продаж. Работаем с 2009 года.</p>
+      </div>
+      <div class="footer__col">
+        <h4>Контакты</h4>
+        <a href="tel:+78552760077">+7 (8552) 76-00-77</a>
+        <a href="mailto:info@velvetmedia.ru">info@velvetmedia.ru</a>
+        <span>г. Набережные Челны, пр. Хасана Туфана, 29В</span>
+      </div>
+      <div class="footer__col">
+        <h4>Разделы</h4>
+        <a href="#site">Сайт</a>
+        <a href="#mediaplan">Медиаплан</a>
+        <a href="#timeline">Старт в ноябре</a>
+      </div>
+    </div>
+    <div class="container footer__bottom">
+      <span>© 2009–2026 VelvetMedia. Персональное предложение.</span>
+      <span>Цифры медиаплана — оценка по рынку, уточняются после теста.</span>
+    </div>
+  </footer>
+
+  <script>
+    // Header scroll state
+    const header = document.getElementById('header');
+    const onScroll = () => header.classList.toggle('scrolled', window.scrollY > 20);
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+
+    // Mobile nav
+    const burger = document.getElementById('burger');
+    const nav = document.querySelector('.nav');
+    burger.addEventListener('click', () => nav.classList.toggle('open'));
+    nav.addEventListener('click', (e) => { if (e.target.tagName === 'A') nav.classList.remove('open'); });
+
+    // Reveal on scroll
+    const revealObserver = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          revealObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12 });
+    document.querySelectorAll('.reveal').forEach((el) => revealObserver.observe(el));
+  </script>
+</body>
+</html>
